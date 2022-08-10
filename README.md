@@ -12,6 +12,6 @@
 
 ![3](https://user-images.githubusercontent.com/28809180/183777833-2c05ffe5-20eb-414a-97b0-e70baefcefd4.jpg)
 
-4 - Assim que clicar no botão, será redirecionado para outra tela onde aparecerá o nome e a saudação escolhida
+4 - Assim que clicar no botão, será redirecionado para outra tela onde aparecerá o nome e a saudação escolhida via shared preferences
 
 ![4](https://user-images.githubusercontent.com/28809180/183777991-c68977d0-efd2-4ab5-b8e9-71b6ca46639b.jpg)
