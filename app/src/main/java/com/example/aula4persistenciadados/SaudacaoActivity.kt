@@ -6,6 +6,10 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import org.w3c.dom.Text
+import java.io.FileNotFoundException
+import java.io.IOException
+import java.nio.charset.Charset
+import java.util.*
 
 class SaudacaoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,20 +17,49 @@ class SaudacaoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_saudacao)
 
         //Encontra o elemento pelo ID
-        var lbSaudacao = findViewById<TextView>(R.id.lbSaudacao)
+        val lbSaudacao = findViewById<TextView>(R.id.lbSaudacao)
 
-        //Recebe os valores da persistência
-        val saudacaoPersistencia = this.getSharedPreferences("saudacao", Context.MODE_PRIVATE)
+        //Executa a função de recuperar dados no arquivo
+        val data = recuperaDadoArquivo("saudacao")
 
-        //Recebe a String da persistência
-        val nome = saudacaoPersistencia.getString("nome", "")
-        val tratamento = saudacaoPersistencia.getString("tratamento", "")
+        //Quebra a string em tokens
+        val tokenizer = StringTokenizer(data, ":")
 
-        //Verifica se foi inserido um tipo de tratamento
+        //Verifica se existe o dado, caso não exista exibe uma mensagem "Sem nome"
+        val nome = if (tokenizer.hasMoreTokens()) tokenizer.nextToken() else "Sem nome"
+
+        //Verifica se existe o dado, caso não exista exibe uma mensagem "Sem Tratamento"
+        val tratamento = if (tokenizer.hasMoreTokens()) tokenizer.nextToken() else "Sem Tratamento"
+
+        //Verifica se foi inserido tratamento e retorna
         if(tratamento.equals("Sem Tratamento")){
             lbSaudacao.text = nome
-        } else{
+        }else{
             lbSaudacao.text = tratamento + " " + nome
+        }
+    }
+
+    // Função que recupera os dados do arquivo
+    fun recuperaDadoArquivo(filename: String) : String{
+        //Tratamento de Exceções
+        //Recuperar erros que podem ocorrer
+        try{
+            //Abre um arquivo privado e cria caso ele não exista
+            val fi = openFileInput(filename)
+            //Le os dados do arquivo em bytes
+            val data = fi.readBytes()
+            //Fecha o arquivo
+            fi.close()
+            //Transforma os dados em String
+            data.toString()
+
+            //Retorna os dados
+            return data.toString(Charset.defaultCharset())
+        //Tratamento dos erros
+        } catch (e: FileNotFoundException){
+            return ""
+        } catch (e: IOException){
+            return ""
         }
     }
 }
