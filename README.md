@@ -1,4 +1,4 @@
-### O intuito desse exercício é de persistência de dados
+### O intuito desse exercício é de persistência de dados via shared preferences
 
 1 - Insira o nome, escolha o tratamento que deseja ser chamado e em seguida clique em "SALVAR NOVA SALVAÇÃO"
 
