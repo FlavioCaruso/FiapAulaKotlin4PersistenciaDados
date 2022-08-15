@@ -21,15 +21,24 @@ class SaudacaoActivity : AppCompatActivity() {
         //Encontra o elemento pelo ID
         val lbSaudacao = findViewById<TextView>(R.id.lbSaudacao)
 
+        //Retorna os dados do banco
         val db = DatabaseManager(this, "saudacoes")
+       
+        //Retorna a lista de saudações
         val cursor = db.listaSaudacao()
+        
+        //Declara as variaveis vazias
         var nome = ""
         var tratamento = ""
+        
+        //Verifica se o index da lista de saudacao for maior que 0
         if(cursor.count > 0){
             cursor.moveToFirst()
             nome = cursor.getString(cursor.getColumnIndex("NOME"))
             tratamento = cursor.getString(cursor.getColumnIndex("TRATAMENTO"))
         }
+        
+        //Verifica se foi escolhido a opção sem tratamento
         if(tratamento.equals("Sem Tratamento")){
             lbSaudacao.text = nome
         } else{
